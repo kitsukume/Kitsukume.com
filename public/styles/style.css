@@ -1,0 +1,79 @@
+body, html {
+    background-color: rgb(36, 32, 32);
+    height: 100%;
+    text-align: center;
+}
+
+h1 {
+    color: blueviolet;
+    font-size: 5rem;
+}
+
+.nav-link {
+    list-style-type: none;
+    margin: 0 auto;
+    padding: 0;
+    width: 350px;
+}
+
+.nav-link a {
+    margin-bottom: 50px;
+    display: block;
+    font-size: 3rem;
+    color: blueviolet;
+    text-decoration: none;
+    padding: 6px 16px;
+    background-color: rgb(36, 36, 36);
+    border-radius: 60px;
+    box-shadow: 0 0 10px black;
+    transition: transform 0.3s ease, background-color 0.3 ease;
+}
+
+.nav-link a:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 32px 0 blueviolet;
+    
+}
+
+.img-circle img {
+    margin-top: 25%;
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.nav-bar {
+    display: flex;
+    padding: 0;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.nav-bar ul {
+    display: flex;
+    list-style-type: none;
+    margin: 0 auto;
+    padding: 0;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.nav-bar a {
+    display: block;
+    font-size: 2rem;
+    color: blueviolet;
+    text-decoration: none;
+    background-color: rgba(36, 36, 36, 0.118);
+    padding: 6px 12px;
+    margin: 0 10px;
+    border-radius: 60px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.263);
+    transition: transform 0.3s ease, background-color 0.3 ease;
+}
+
+.nav-bar a:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 12px 0 blueviolet;
+}
