@@ -20,8 +20,8 @@ router.get("/projects", (req, res) => {
     res.render("projects.ejs");
 });
 
-router.get("/home", (req, res) => {
-    res.render("home.ejs");
+router.get("/about", (req, res) => {
+    res.render("about.ejs");
 });
 
 router.post("/login", passport.authenticate("local"), (req, res) => {
