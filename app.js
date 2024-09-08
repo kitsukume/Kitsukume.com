@@ -8,9 +8,7 @@ const app = express();
 const port = process.env.SERVER_PORT;
 
 app.set('view engine', 'ejs');
-// Set the directory for your views
 app.set('views', './views');
-
 app.use(express.static("public"));
 
 app.use("/", routes);
