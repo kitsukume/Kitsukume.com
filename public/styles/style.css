@@ -45,6 +45,10 @@ h1 {
     
 }
 
+hr {
+    color: blueviolet;
+}
+
 .img-circle img {
     margin-top: 85px;
     height: 200px;
