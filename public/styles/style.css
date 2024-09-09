@@ -188,3 +188,19 @@ hr {
  .card p {
     font-size: 20px;
  }
+
+ table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  table, th, td {
+    border: 1px solid black;
+  }
+  th, td {
+    padding: 8px;
+    text-align: left;
+  }
+  .scrollable-table {
+    max-height: 400px; /* Adjust as needed */
+    overflow-y: auto;
+  }

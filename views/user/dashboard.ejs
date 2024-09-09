@@ -7,7 +7,20 @@
 <%- include('../partials/navBar') %>
 <br>
 <hr>
-hi
-<br>
+<h1>Welcome, <%= user.email %>!</h1>
+<p>Here is your personalized dashboard.</p>
+
+<!-- Links based on user permissions -->
+ <div class="nav-link">
+<% if (user.permissions.includes('camera_access')) { %>
+    <a href="/camera">Camera Page</a>
+<% } %>
+<% if (user.permissions.includes('site_access')) { %>
+    <a href="/site">Site Page</a>
+<% } %>
+<% if (user.permissions.includes('admin_access')) { %>
+    <a href="/admin">Admin Page</a>
+<% } %>
+</div>
 </div>
 <%- include('../partials/footer') %>

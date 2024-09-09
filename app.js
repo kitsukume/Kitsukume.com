@@ -6,6 +6,7 @@ dotenv.config();
 import routes from "./modules/routes.js";
 import setupSession from "./modules/cookie.js";
 import { setupPassport, authRouter } from './modules/auth.js';
+import adminRouter from './modules/admin.js';
 
 
 const app = express();
@@ -15,6 +16,8 @@ app.use(bodyParser.json());
 app.set('view engine', 'ejs');
 app.set('views', './views');
 app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 setupSession(app);
 setupPassport();
@@ -26,6 +29,7 @@ app.use((req, res, next) => {
 
 app.use("/", routes);
 app.use(authRouter);
+app.use('/admin', adminRouter);
 
 
 

@@ -32,8 +32,18 @@ const setupPassport = () => {
 
   passport.deserializeUser(async (id, done) => {
     try {
-      const result = await db.query("SELECT * FROM users WHERE id = $1", [id]);
-      done(null, result.rows[0]);
+      const userResult = await db.query("SELECT * FROM users WHERE id = $1", [id]);
+      const user = userResult.rows[0];
+
+      // Fetch roles
+      const rolesResult = await db.query("SELECT r.name FROM roles r JOIN user_roles ur ON r.id = ur.role_id WHERE ur.user_id = $1", [id]);
+      user.roles = rolesResult.rows.map(row => row.name);
+
+      // Fetch permissions
+      const permissionsResult = await db.query("SELECT p.name FROM permissions p JOIN role_permissions rp ON p.id = rp.permission_id JOIN user_roles ur ON rp.role_id = ur.role_id WHERE ur.user_id = $1", [id]);
+      user.permissions = permissionsResult.rows.map(row => row.name);
+
+      done(null, user);
     } catch (err) {
       done(err);
     }

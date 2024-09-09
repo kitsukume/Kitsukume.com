@@ -1,0 +1,70 @@
+<%- include('../partials/header', { isAuthenticated: isAuthenticated }) %>
+
+<div class="center">
+
+    <h1>Dashboard</h1>
+    <%- include('../partials/navBar') %>
+    <br>
+    <hr>
+    <h1>Welcome, <%= user.email %>!</h1>
+    <p>Here is your personalized dashboard.</p>
+  
+    <!-- Links based on user permissions -->
+    <div class="nav-link">
+        <% if (user && user.permissions && user.permissions.includes('camera_access')) { %>
+        <a href="/camera">Camera Page</a>
+      <% } %>
+      <% if (user && user.permissions && user.permissions.includes('camera_access')) { %>
+        <a href="/site">Site Page</a>
+      <% } %>
+      <% if (user && user.permissions && user.permissions.includes('camera_access')) { %>
+        <a href="/admin">Admin Page</a>
+        <% } %>
+    </div>
+
+ <form action="/admin/assign-role" method="POST">
+  <label for="userId">User ID:</label>
+  <input type="text" id="userId" name="userId" required>
+  
+  <label for="roleName">Role:</label>
+  <select id="roleName" name="roleName">
+    <option value="user">User</option>
+    <option value="admin">Admin</option>
+  </select>
+  
+  <button type="submit">Assign Role</button>
+</form>
+        
+<% if (typeof message !== 'undefined' && message) { %>
+    <div id="roleMessage"><%= message %></div>
+<% } %>
+<% if (typeof error !== 'undefined' && error) { %>
+    <div id="roleError"><%= error %></div>
+<% } %>
+      
+    
+  
+    <h1>All Users</h1>
+    <div class="scrollable-table">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Roles</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% users.forEach(user => { %>
+            <tr>
+              <td><%= user.id %></td>
+              <td><%= user.email %></td>
+              <td><%= user.roles.join(', ') %></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <%- include('../partials/footer') %>
