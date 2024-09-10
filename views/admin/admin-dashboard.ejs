@@ -7,8 +7,6 @@
     <hr>
     <h2>Welcome, <%= user.email %>!</h2>
     
-  
-    <!-- Links based on user permissions -->
      <div class="flex-container">
     <div class="snav-bar">
         <ul>
@@ -22,14 +20,13 @@
             <a href="/admin/stream">Stream</a>
         <% } %>
         <% if (user && user.permissions && user.permissions.includes('admin_access')) { %>
-            <a href="/settings">Settings</a>
+            <a href="/admin/settings">Settings</a>
             
         <% } %>
         <li><a href="/admin/stream"> stream</a></li>
     </ul>
     </div>
 <div class="content">
-    <!-- Container to display messages -->
     <div id="message"></div>
     <div class="table-flex-container">
     <table id="usersTable">
@@ -55,20 +52,35 @@
         </tbody>
     </table>
 
-<div class="form-flex-container">
-    <form id="assignRoleForm" action="/admin/manage-role" method="POST">
-        <input type="text" name="userId" value="1">
-        <select name="roleName">
-            <option value="admin">Admin</option>
-            <option value="user">User</option>
-        </select>
-        <input type="hidden" name="process" value="assign" id="actionType">
-        <button type="submit" id="assignButton">Assign Role</button>
-        <button type="button" id="removeButton">Remove Role</button>
-    </form>
 
-    <div id="message"></div>
+    <div class="form-flex-container">
+        <form id="assignRoleForm" action="/admin/manage-role" method="POST">
+            <div class="form-flex-row">
+            <input type="text" name="userId" placeholder="1" id="form-input">
+          <div class="custom-select">
+            <div class="select-selected">Role</div>
+            <div class="select-items">
+              <div data-value="admin">Admin</div>
+              <div data-value="user">User</div>
+            </div>
+            <select name="roleName" id="roleName">
+              <option value="admin">Admin</option>
+              <option value="user">User</option>
+            </select>
+          </div>
+          <button type="submit" id="assignButton">Assign Role</button>
+          <button type="button" id="removeButton">Remove Role</button>
+
 </div>
+          <input type="hidden" name="process" value="assign" id="actionType">
+
+        </form>
+        <div id="message"></div>
+      </div>
+
+
+
+
 
 
 

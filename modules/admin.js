@@ -59,7 +59,7 @@ adminRouter.post('/manage-role', async (req, res) => {
 
   adminRouter.get('/stream', async (req, res) => {
     if (req.isAuthenticated()) {
-      console.log(req.user); // Log the user object to verify it's being passed
+      
   
       if (req.user.roles.includes('admin')) {
         try {
@@ -87,7 +87,31 @@ adminRouter.post('/manage-role', async (req, res) => {
 
 
 
+  adminRouter.get('/settings', async (req, res) => {
+    if (req.isAuthenticated()) {
+      if (req.user.roles.includes('admin')) {
+        try {
+          const result = await db.query(`
+            SELECT u.id, u.email, array_agg(r.name) AS roles
+            FROM users u
+            LEFT JOIN user_roles ur ON u.id = ur.user_id
+            LEFT JOIN roles r ON ur.role_id = r.id
+            GROUP BY u.id;
+          `);
+          const users = result.rows;
 
+          res.render('admin/settings', { user: req.user, users });
+        } catch (err) {
+          console.error(err);
+          res.status(500).send('Server error');
+        }
+      } else {
+        res.status(403).send('Access denied. Admins only.');
+      }
+    } else {
+      res.redirect('/home');
+    }
+  });
 
 // Route to display the admin dashboard
 adminRouter.get('/', async (req, res) => {

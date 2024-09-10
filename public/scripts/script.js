@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
       formData.set('process', action);
 
       const data = Object.fromEntries(formData.entries());
-      console.log('Submitting form with data:', data);
+      
 
       try {
         const response = await fetch(form.action, {
@@ -85,11 +85,11 @@ document.addEventListener('DOMContentLoaded', () => {
           body: JSON.stringify(data)
         });
 
-        console.log('Response status:', response.status);
+        
 
         if (response.ok) {
           const result = await response.json();
-          console.log('Response data:', result);
+          
           message.textContent = result.message || 'Operation successful';
 
           const usersTable = document.getElementById('usersTable');
@@ -129,4 +129,40 @@ document.addEventListener('DOMContentLoaded', () => {
       submitForm('assign');
     });
   }
+});
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  var selected = document.querySelector('.select-selected');
+  var items = document.querySelector('.select-items');
+  var select = document.getElementById('roleName');
+
+  // Initially hide the dropdown items
+  items.style.display = 'none';
+
+  selected.addEventListener('click', function(e) {
+    e.stopPropagation();
+    // Toggle the dropdown menu
+    items.style.display = items.style.display === 'none' ? 'block' : 'none';
+  });
+
+  items.addEventListener('click', function(e) {
+    if (e.target && e.target.nodeName === 'DIV') {
+      // Set the selected item text
+      selected.innerHTML = e.target.innerHTML;
+      // Update the hidden select element's value
+      select.value = e.target.getAttribute('data-value');
+      // Hide the dropdown menu
+      items.style.display = 'none';
+    }
+  });
+
+  document.addEventListener('click', function(e) {
+    // Close the dropdown if the user clicks outside of it
+    if (!e.target.closest('.custom-select')) {
+      items.style.display = 'none';
+    }
+  });
 });

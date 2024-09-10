@@ -148,6 +148,7 @@ hr {
     margin: 0 10px;
     border-radius: 60px;
     box-shadow: 0 0 10px black;
+    cursor: pointer;
     transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
@@ -171,12 +172,66 @@ hr {
 .modal-content {
     background-color: rgba(0,0,0,0.4);
     color: blueviolet;
-    margin: 30% auto;
+    margin: 5% auto;
     padding: 20px;
     width: 30%;
     border-radius: 50px;
     box-shadow: 0 0 32px 0 blueviolet;
 }
+
+#modal-button {
+    color: blueviolet;
+    background-color: rgba(70, 69, 69, 0.118);
+    cursor: pointer;
+    border: 0;
+    border-radius: 10px;
+    box-shadow: 0 0 10px black;
+    margin-top: 10px;
+    padding: 6px 12px;
+}
+#modal-button:hover {
+    box-shadow: 0 0 16px 0 blueviolet;
+}
+
+/* Regular input field background */
+#loginForm input[type="text"],
+#loginForm input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid blueviolet;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: rgba(36, 36, 36, 0.118); /* Change background color */
+  color: blueviolet; /* Ensure text color is visible */
+}
+
+/* Autofill override (for Chrome, Safari) */
+#loginForm input:-webkit-autofill {
+  background-color: rgba(36, 36, 36, 0.118) !important; /* Override autofill background */
+  -webkit-box-shadow: 0 0 10px black inset !important; /* Remove yellow shadow */
+  box-shadow: 0 0 10px black !important;
+  color: blueviolet !important;
+}
+
+/* Autofill override for Firefox */
+#loginForm input:autofill {
+    background-color: rgba(36, 36, 36, 0.118) !important;
+    box-shadow: 0 0 10px black inset !important;
+    color: blueviolet !important;
+  }
+
+#loginForm input:-webkit-autofill:hover,
+#loginForm input:-webkit-autofill:focus,
+#loginForm input:-webkit-autofill:active {
+  background-color: rgba(36, 36, 36, 0.118) !important; /* Ensure the same background color */
+  -webkit-box-shadow: 0 0 10px black inset !important;
+  box-shadow: 0 0 10px black inset !important;
+  color: blueviolet !important;
+}
+
+
 
 .close {
     color: blueviolet;
@@ -266,6 +321,41 @@ th, td {
     overflow-y: auto;
 }
 
+#assignButton, #removeButton {
+    flex: 1; /* Allow buttons to take up available space */
+    min-width: 150px; /* Ensure buttons have a minimum width */
+    padding: 6px 12px;
+    font-size: 1rem;
+    color: blueviolet;
+    text-decoration: none;
+    background-color: rgba(36, 36, 36, 0.118);
+    border-radius: 60px;
+    box-shadow: 0 0 10px black;
+    border: 0;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  #form-input {
+    flex: 1; /* Take available space */
+    min-width: 200px; /* Ensure minimum width */
+    padding: 6px 12px;
+    font-size: 1rem;
+    color: blueviolet;
+    background-color: rgba(36, 36, 36, 0.118);
+    border: 0;
+    border-radius: 60px;
+    box-shadow: 0 0 10px black;
+    box-sizing: border-box; /* Include padding in width */
+    margin-top: 10px;
+  }
+
+#assignButton:hover, #removeButton:hover, #form-input:hover, .select-selected:hover {
+    box-shadow: 0 0 16px 0 blueviolet;
+}
+
+
+
 .video-container {
     width: 60%;
     /* height: 360px; */
@@ -277,3 +367,62 @@ th, td {
     height: 100%;
 }
 
+/* Style the custom select container */
+.custom-select {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+   
+  }
+  
+  /* Style the select box */
+  .select-selected {
+      background-color: rgba(36, 36, 36, 0.118);
+    color: blueviolet;
+    padding: 6px 12px;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    width: 60px;
+    box-shadow: 0 0 10px black;
+    border-radius: 60px;
+    margin-top: 10px;
+  }
+  
+  /* Hide the default select element */
+  .custom-select select {
+    display: none;
+  }
+  
+  /* Style the dropdown items */
+  .select-items {
+    display: none; /* Ensure dropdown is hidden initially */
+    position: absolute;
+    background-color: rgba(36, 36, 36, 0.118);
+    color: blueviolet;
+    min-width: 50px;
+    box-shadow: 0 0 10px black;
+    z-index: 1;
+    border-radius: 5px 5px 10px 10px;
+    margin-top: 5px;
+  }
+  
+  /* Style each dropdown item */
+  .select-items div {
+    color: blueviolet;
+    padding: 6px 12px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+  }
+  
+  /* Change color of items on hover */
+  .select-items div:hover {
+    background-color: #3a38388f;
+  }
+
+  .form-flex-row {
+    display: flex;
+    align-items: center; /* Align items vertically center */
+    gap: 10px; /* Space between form elements */
+  }

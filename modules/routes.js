@@ -45,22 +45,6 @@ router.post("/login", passport.authenticate("local"), (req, res) => {
   });
 
 
-
-/*   router.get('/admin', (req, res) => {
-    if (req.isAuthenticated()) {
-      try {
-        const user = req.user;
-        const isAdmin = user.roles && user.roles.includes('admin');
-        res.render('admin/admin-dashboard.ejs', { user, isAdmin });
-      } catch (err) {
-        res.status(500).send("Server error");
-      }
-    } else {
-      res.redirect('/home');
-    }
-  }); */
-  
-
   router.get('/logout', (req, res, next) => {
     req.logout((err) => {
       if (err) { 

@@ -24,7 +24,6 @@ setupSession(app);
 setupPassport();
 
 app.use((req, res, next) => {
-  console.log('User in all routes:', req.user); // Should print for all routes
   next();
 });
 const streamKey = process.env.STREAM_KEY;

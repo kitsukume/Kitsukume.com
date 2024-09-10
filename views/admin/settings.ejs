@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+/* Style the custom select container */
+.custom-select {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+/* Style the select box */
+.select-selected {
+    background-color: rgba(36, 36, 36, 0.118);
+  color: blueviolet;
+  padding: 16px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  width: 60px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: 50px;
+}
+
+/* Hide the default select element */
+.custom-select select {
+  display: none;
+}
+
+/* Style the dropdown items */
+.select-items {
+  display: none; /* Ensure dropdown is hidden initially */
+  position: absolute;
+  background-color: rgba(36, 36, 36, 0.118);
+  min-width: 50px;
+  box-shadow: 0 0 10px black;
+  z-index: 1;
+  border-radius: 4px;
+}
+
+/* Style each dropdown item */
+.select-items div {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+}
+
+/* Change color of items on hover */
+.select-items div:hover {
+  background-color: #430000;
+}
+</style>
+</head>
+<body>
+
+<div class="form-flex-container">
+  <form id="assignRoleForm" action="/admin/manage-role" method="POST">
+    <input type="text" name="userId" placeholder="1" id="form-input">
+    <div class="custom-select">
+      <div class="select-selected">Select role</div>
+      <div class="select-items">
+        <div data-value="admin">Admin</div>
+        <div data-value="user">User</div>
+      </div>
+      <select name="roleName" id="roleName">
+        <option value="admin">Admin</option>
+        <option value="user">User</option>
+      </select>
+    </div>
+    <input type="hidden" name="process" value="assign" id="actionType">
+    <button type="submit" id="assignButton">Assign Role</button>
+    <button type="button" id="removeButton">Remove Role</button>
+  </form>
+  <div id="message"></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var selected = document.querySelector('.select-selected');
+  var items = document.querySelector('.select-items');
+  var select = document.getElementById('roleName');
+
+  // Initially hide the dropdown items
+  items.style.display = 'none';
+
+  selected.addEventListener('click', function(e) {
+    e.stopPropagation();
+    // Toggle the dropdown menu
+    items.style.display = items.style.display === 'none' ? 'block' : 'none';
+  });
+
+  items.addEventListener('click', function(e) {
+    if (e.target && e.target.nodeName === 'DIV') {
+      // Set the selected item text
+      selected.innerHTML = e.target.innerHTML;
+      // Update the hidden select element's value
+      select.value = e.target.getAttribute('data-value');
+      // Hide the dropdown menu
+      items.style.display = 'none';
+    }
+  });
+
+  document.addEventListener('click', function(e) {
+    // Close the dropdown if the user clicks outside of it
+    if (!e.target.closest('.custom-select')) {
+      items.style.display = 'none';
+    }
+  });
+});
+</script>
+
+</body>
+</html>
