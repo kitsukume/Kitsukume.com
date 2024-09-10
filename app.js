@@ -8,6 +8,8 @@ import routes from "./modules/routes.js";
 
 import { setupPassport, authRouter } from './modules/auth.js';
 import adminRouter from './modules/admin.js';
+import errorRouter from './error.js';
+
 
 
 const app = express();
@@ -33,12 +35,14 @@ app.use((req, res, next) => {
     next();
   });
 
+
+
 app.use("/", routes);
 app.use(authRouter);
 app.use('/admin', adminRouter);
 
 
-
+app.use(errorRouter);
 
 
 app.listen(port, () => {
