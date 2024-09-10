@@ -44,6 +44,8 @@ router.post("/login", passport.authenticate("local"), (req, res) => {
     }
   });
 
+
+
 /*   router.get('/admin', (req, res) => {
     if (req.isAuthenticated()) {
       try {

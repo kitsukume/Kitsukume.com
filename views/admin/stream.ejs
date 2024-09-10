@@ -1,0 +1,78 @@
+<%- include('../partials/header', { isAuthenticated: isAuthenticated }) %>
+
+<div class="center">
+    <h1>Stream</h1>
+    <%- include('../partials/navBar') %>
+    <br>
+    <hr>
+
+
+    <h2>Welcome, <%= user.email %>!</h2>
+    
+  
+    <!-- Links based on user permissions -->
+     <div class="flex-container">
+        <div class="snav-bar">
+            <ul>
+            <% if (user && user.permissions && user.permissions.includes('camera_access')) { %>
+                <li><a href="/camera">Camera Page</a></li>
+            <% } %>
+            <% if (user && user.permissions && user.permissions.includes('admin_access')) { %>
+                <a href="/admin">Admin Page</a>
+            <% } %>
+            <% if (user && user.permissions && user.permissions.includes('admin_access')) { %>
+                <a href="/admin/stream">Stream</a>
+            <% } %>
+            <% if (user && user.permissions && user.permissions.includes('admin_access')) { %>
+                <a href="/settings">Settings</a>
+                
+            <% } %>
+            <li><a href="/admin/stream"> stream</a></li>
+        </ul>
+        </div>
+        <div class="content">
+<div class="video-container">
+<video id="live-stream" class="video-js vjs-default-skin" controls autoplay>
+    <!-- The source is set via JavaScript if HLS.js is supported -->
+</video>
+</div>
+</div>
+<script src="https://vjs.zencdn.net/7.14.3/video.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<script>
+    var video = document.getElementById('live-stream');
+    var streamKey = '<%= streamKey %>'; // Get the stream key from EJS
+
+    if (Hls.isSupported()) {
+        var hls = new Hls();
+        hls.loadSource('https://kitsukume.com/hls/' + streamKey + '.m3u8');
+        hls.attachMedia(video);
+
+        hls.on(Hls.Events.MANIFEST_PARSED, function () {
+            video.play().catch(function(error) {
+                console.log('Error attempting to autoplay:', error);
+            });
+        });
+
+        hls.on(Hls.Events.ERROR, function (event, data) {
+            if (data.fatal) {
+                console.error('HLS.js error:', data);
+            }
+        });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = 'https://kitsukume.com/hls/' + streamKey + '.m3u8';
+        video.addEventListener('loadedmetadata', function () {
+            video.play().catch(function(error) {
+                console.log('Error attempting to autoplay:', error);
+            });
+        });
+    }
+</script>
+
+</div>
+</div>
+
+</div>
+
+    <%- include('../partials/footer') %>
+</div>

@@ -1,8 +1,10 @@
 import passport from "passport";
 import session from "express-session";
+import dotenv from 'dotenv';
+dotenv.config();
 
 const sessionMiddleware = session({
-  secret: process.env.SESS_SECRET || 'default-secret',
+  secret: process.env.SESS_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {

@@ -57,44 +57,69 @@ loginForm.onsubmit = async function(event) {
   }
 };
 
-// Role assignment functionality
+
 document.addEventListener('DOMContentLoaded', () => {
-  const roleForm = document.getElementById('roleForm');
-  const roleMessage = document.getElementById('roleMessage');
-  const roleError = document.getElementById('roleError');
+  const actionType = document.getElementById('actionType');
+  const removeButton = document.getElementById('removeButton');
+  const assignButton = document.getElementById('assignButton');
+  const form = document.getElementById('assignRoleForm');
+  const message = document.getElementById('message');
 
-  if (roleForm) {
-    document.getElementById('assignRoleButton').addEventListener('click', async function(event) {
-      event.preventDefault(); // Prevent default form submission
+  async function submitForm(action) {
+      const formData = new FormData(form);
+      formData.set('process', action); // Use 'process' to match backend
 
-      const userId = document.getElementById('userId').value;
-      const roleName = document.getElementById('roleName').value;
+      const data = Object.fromEntries(formData.entries());
+      console.log('Submitting form with data:', data);
 
       try {
-        const response = await fetch('/assign-role', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ userId, roleName })
-        });
+          const response = await fetch(form.action, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(data)
+          });
 
-        if (response.ok) {
-          // Assume the response is a JSON object with a message
-          const result = await response.json();
-          roleMessage.innerText = result.message || "Role assigned successfully.";
-          roleMessage.style.display = "block";
-          roleError.style.display = "none"; // Hide error message
-        } else {
-          // Handle errors returned by the server
-          const error = await response.json();
-          roleError.innerText = error.message || "An error occurred.";
-          roleError.style.display = "block";
-          roleMessage.style.display = "none"; // Hide success message
-        }
+          console.log('Response status:', response.status);
+
+          if (response.ok) {
+              const result = await response.json();
+              console.log('Response data:', result);
+              message.textContent = result.message || 'Operation successful';
+
+              // Optionally, update the table if needed
+              if (result.users) {
+                  const usersTable = document.getElementById('usersTable');
+                  usersTable.innerHTML = ''; // Clear existing rows
+                  result.users.forEach(user => {
+                      const row = document.createElement('tr');
+                      row.innerHTML = `
+                          <td>${user.id}</td>
+                          <td>${user.email}</td>
+                          <td>${user.roles.join(', ')}</td>
+                      `;
+                      usersTable.appendChild(row);
+                  });
+              } else {
+                  usersTable.innerHTML = '<tr><td colspan="3">No users found</td></tr>';
+              }
+          } else {
+              const error = await response.text();
+              message.textContent = error || 'Failed to process request';
+          }
       } catch (error) {
-        roleError.innerText = error.message || "An error occurred.";
-        roleError.style.display = "block";
-        roleMessage.style.display = "none"; // Hide success message
+          console.error('Error:', error);
+          message.textContent = 'Failed to process request';
       }
-    });
   }
+
+  removeButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      submitForm('remove');
+  });
+
+  assignButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      submitForm('assign');
+  });
 });
+
